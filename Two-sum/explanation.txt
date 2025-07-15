@@ -1,0 +1,81 @@
+
+Comparison Report: Two Sum Solutions  using chatgpt
+====================================
+
+Problem Statement:
+------------------
+Given a list of integers `nums` and an integer `target`, return the indices of the two numbers such that they add up to the target.
+
+My Solution
+-----------------
+Code Summary:
+-------------
+class Solution:
+    def twoSum(self, nums, target):
+        for i in range(len(nums)):
+            y = target - nums[i]
+            if y in nums and nums.index(y) != i:
+                return [i, nums.index(y)]
+
+How It Works:
+- Loops through each number.
+- Computes the complement `y = target - nums[i]`.
+- Checks if `y` exists in the list.
+- Returns indices using `.index()`.
+
+Drawbacks:
+----------
+- `in nums` is O(n): For each number, checks if complement exists — slow for large lists.
+- `.index()` is O(n): Called every iteration — makes overall time complexity O(n²).
+- Fails with duplicates: If the same number appears twice (like `[3, 3]`), `.index()` may return the same index for both.
+
+Time Complexity: O(n²)
+Space Complexity: O(1)
+
+Optimized Solution (Hash Table)
+-------------------------------
+Code Summary:
+-------------
+class Solution:
+    def twoSum(self, nums, target):
+        sec = dict()
+        for ind, num in enumerate(nums):
+            if target - num not in sec:
+                sec[num] = ind
+                continue
+            return [ind, sec[target - num]]
+
+How It Works:
+- Uses a dictionary (`sec`) to store numbers and their indices as we loop.
+- For each number, checks if the complement exists in the dictionary.
+- Returns the indices immediately when a match is found.
+
+Benefits:
+---------
+- Hash table lookup is O(1): Much faster than `in nums` or `.index()`.
+- Only one loop: True O(n) time complexity.
+- Handles duplicates properly: Keeps track of all positions.
+- Returns early: Stops as soon as a solution is found.
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+
+Test Case Example: [3, 3], Target = 6
+-------------------------------------
+Original: Fails or returns [0, 0]
+Optimized: Correctly returns [1, 0] or [0, 1]
+
+Summary Table
+-------------
+| Feature                   | Original Solution      | Optimized Solution       |
+|---------------------------|------------------------|---------------------------|
+| Time Complexity           | O(n²)                  | O(n)                      |
+| Space Complexity          | O(1)                   | O(n)                      |
+| Handles duplicates        | No                     | Yes                       |
+| Performance on large input| Slower                 | Fast                      |
+| Code readability          | Simple, but less safe  | Slightly longer, more reliable |
+
+Conclusion
+----------
+The optimized solution using a hash table is significantly faster, safer, and more scalable, especially for large inputs or duplicate numbers. 
+It is the preferred solution in professional and interview settings.
