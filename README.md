@@ -1,2 +1,2 @@
 # problem-solving
-"I use this repository to save my answers and the correct solutions to problems I work on."
+"This repository contains my personal solutions to various problems, along with the correct answers for reference and learning."
